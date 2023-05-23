@@ -1,30 +1,28 @@
-
-import reportWebVitals from './reportWebVitals';
-import App from './App';
-import React from 'react';
-import * as ReactDOM from 'react-dom/client';
+import reportWebVitals from "./reportWebVitals";
+import App from "./App";
+import React from "react";
+import * as ReactDOM from "react-dom/client";
 import {
   ApolloClient,
   InMemoryCache,
   createHttpLink,
   ApolloProvider,
-} from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:5002',
+  uri: "http://localhost:10000",
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('jwtToken');
+  const token = localStorage.getItem("jwtToken");
   console.log(token);
   return {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : "",
-    }
-  }
+    },
+  };
 });
 
 const client = new ApolloClient({
@@ -33,16 +31,13 @@ const client = new ApolloClient({
 });
 
 // Supported in React 18+
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <ApolloProvider client={client}>
     <App />
-  </ApolloProvider>,
+  </ApolloProvider>
 );
-
-
-
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
