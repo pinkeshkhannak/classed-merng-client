@@ -10,7 +10,7 @@ import { setContext } from "@apollo/client/link/context";
 
 //production this will be different
 const httpLink = createHttpLink({
-  uri: "http://localhost:10000/",
+  uri: "https://webapp-qapl.onrender.com/",
 });
 
 const authLink = setContext((_, { headers }) => {
