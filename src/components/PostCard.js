@@ -28,16 +28,23 @@ function PostCard({
       </Card.Content>
       <Card.Content extra>
         <LikeButton user={user} post={{ id, likes, likeCount }} />
-        <div class="ui icon button" data-content="Add users to your feed">
-          <Button labelPosition="right" as={Link} to={`/posts/${id}`}>
-            <Button color="blue" basic>
-              <Icon name="comments" />
-            </Button>
-            <Label basic color="blue" pointing="left">
-              {commentCount}
-            </Label>
+        <Button labelPosition="right" as={Link} to={`/posts/${id}`}>
+          <Button
+            as="div"
+            color="blue"
+            basic
+            style={{
+              width: "10px",
+              paddingLeft: "15px",
+              paddingRight: "30px",
+            }}
+          >
+            <Icon name="comments" />
           </Button>
-        </div>
+          <Label basic color="blue" pointing="left">
+            {commentCount}
+          </Label>
+        </Button>
         {user && user.username === username && (
           <DeleteButton postId={id} likes={likes} />
         )}

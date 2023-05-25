@@ -48,7 +48,7 @@ const SinglePost = (props) => {
   }
   let postMarkup;
   if (!data) {
-    postMarkup = <p> Loading post..</p>;
+    postMarkup = <p> Loading a post..</p>;
   } else {
     const {
       id,
@@ -60,7 +60,7 @@ const SinglePost = (props) => {
       likeCount,
       commentCount,
     } = data.getPost;
-    console.log("body111", data);
+    console.log("body111", id, commentCount);
     postMarkup = (
       <Grid>
         <Grid.Row>
@@ -80,16 +80,28 @@ const SinglePost = (props) => {
               </Card.Content>
               <hr />
               <Card.Content extra>
-                <LikeButton user={user} post={{ id, likeCount, likes }} />
-                <Button
-                  as="div"
-                  labelPosition="right"
-                  onClick={() => console.log("comment on the post")}
-                >
-                  <button basic color="blue">
+                <LikeButton user={user} post={{ id, likes, likeCount }} />
+                <Button labelPosition="right">
+                  <Button
+                    as="div"
+                    color="blue"
+                    basic
+                    style={{
+                      width: "10px",
+                      paddingLeft: "15px",
+                      paddingRight: "30px",
+                    }}
+                  >
                     <Icon name="comments" />
-                  </button>
-                  <Label basic color="blue" pointing="left">
+                  </Button>
+                  <Label
+                    basic
+                    color="blue"
+                    pointing="left"
+                    style={{
+                      height: "36px",
+                    }}
+                  >
                     {commentCount}
                   </Label>
                 </Button>
@@ -129,12 +141,16 @@ const SinglePost = (props) => {
             )}
             {comments.map((comment) => (
               <Card fluid key={comment.id}>
-                {user && user.username === comment.username && (
-                  <DeleteButton postId={id} commentId={comment.id} />
-                )}
-                <Card.Header>{comment.username}</Card.Header>
-                <Card.Meta>{moment(comment.createdAt).fromNow()}</Card.Meta>
-                <Card.Description>{comment.body}</Card.Description>
+                <Card.Content>
+                  <Card.Header>{comment.username}</Card.Header>
+                  <Card.Meta>{moment(comment.createdAt).fromNow()}</Card.Meta>
+                  <Card.Description>{comment.body}</Card.Description>
+                </Card.Content>
+                <Card.Content float="right">
+                  {user && user.username === comment.username && (
+                    <DeleteButton postId={id} commentId={comment.id} />
+                  )}
+                </Card.Content>
               </Card>
             ))}
           </Grid.Column>
@@ -162,6 +178,7 @@ const FETCH_POST_QUERY = gql`
         createdAt
         body
       }
+      commentCount
     }
   }
 `;

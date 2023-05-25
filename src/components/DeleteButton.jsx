@@ -8,6 +8,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { FETCH_POSTS_QUERY } from "../Utils/graphql";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function DeleteButton({ postId, commentId, callback }) {
   const [open, setOpen] = React.useState(false);
@@ -36,10 +37,14 @@ function DeleteButton({ postId, commentId, callback }) {
     <>
       <Button
         variant="outlined"
-        style={{ height: "39px" }}
+        style={{
+          padding: "13px",
+          bottom: "1px",
+          height: "37px",
+        }}
         onClick={() => setOpen(true)}
       >
-        Delete
+        <DeleteIcon style={{ color: "red" }} />
       </Button>
       <Dialog
         open={open}
@@ -54,7 +59,7 @@ function DeleteButton({ postId, commentId, callback }) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)}>Disagree</Button>
+          <Button onClick={() => setOpen(false)}>cancel</Button>
           <Button onClick={() => deletePost()} autoFocus>
             Agree
           </Button>
